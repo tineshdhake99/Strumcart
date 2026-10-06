@@ -1,8 +1,0 @@
-require('dotenv').config();const m=require('mongoose'),bcrypt=require('bcryptjs'),{User,Product}=require('./models');
-const C=['Electric Guitars','Acoustic Guitars','Bass Guitars','Keyboards & Pianos','Drums & Percussion','Amplifiers','Effects & Pedals','Recording Equipment','Accessories'];
-const D=[['Fender','Player Stratocaster',89999,0],['Yamaha','FG800 Acoustic',24999,1],['Ibanez','SR300E Bass',42999,2],['Casio','CT-S300 Keyboard',17999,3],['Roland','TD-1DMK E-Drum Kit',64999,4],['Boss','Katana 50 MkII Amp',27999,5],['Boss','DS-1 Distortion',7999,6],['Focusrite','Scarlett 2i2 Interface',15999,7],['Shure','SM58 Microphone',9999,7],['Gibson','Les Paul Studio',189999,0],['Behringer','X-Touch Mini',8499,7],['Dunlop','Strap & Pick Bundle',1499,8]];
-(async()=>{await m.connect(process.env.MONGO_URI);
- if(!await Product.countDocuments())await Product.insertMany(D.map(([b,n,p,c],x)=>({name:n,brand:b,category:C[c],price:p,mrp:Math.round(p*(x%2?1.12:1)),stock:5+x*3,sku:'SC-'+(1000+x),slug:(b+'-'+n).toLowerCase().replace(/[^a-z0-9]+/g,'-'),desc:`${b} ${n} - a reliable choice for players of every level.`,warranty:'1 year manufacturer warranty',specs:{Brand:b},images:[`https://picsum.photos/seed/sc${x}/600/450`],featured:x<6,sold:x*3})));
- const{ADMIN_EMAIL:e,ADMIN_PASSWORD:p}=process.env;
- if(e&&p&&p.length>=12){await User.updateOne({email:e.toLowerCase()},{$setOnInsert:{name:'Admin',password:await bcrypt.hash(p,12),role:'admin'}},{upsert:true});console.log('Admin ready:',e)}else console.log('No admin created (set ADMIN_EMAIL and a 12+ char ADMIN_PASSWORD).');
- console.log('Seeded.');process.exit()})();
