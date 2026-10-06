@@ -1,6 +1,7 @@
 {
   "name": "strumcart",
   "version": "1.0.0",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
@@ -20,8 +21,5 @@
   "main": "index.js",
   "engines": {
     "node": "22.x"
-  },
-{
-  "type": "module"
-}
+  }
 }
