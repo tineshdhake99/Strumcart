@@ -1,0 +1,7 @@
+const m=require('mongoose'),S=m.Schema,O=S.Types.ObjectId;
+const User=m.model('User',new S({name:String,email:{type:String,unique:true,lowercase:true},phone:String,password:String,role:{type:String,enum:['customer','admin'],default:'customer'},active:{type:Boolean,default:true}},{timestamps:true}));
+const Product=m.model('Product',new S({name:String,slug:{type:String,unique:true},sku:{type:String,unique:true},brand:{type:String,index:true},category:{type:String,index:true},desc:String,specs:{type:Map,of:String},warranty:String,price:{type:Number,min:0},mrp:{type:Number,min:0},stock:{type:Number,min:0,default:0},images:[String],featured:Boolean,sold:{type:Number,default:0},active:{type:Boolean,default:true}},{timestamps:true}));
+const Cart=m.model('Cart',new S({user:{type:O,unique:true},items:[{_id:false,product:{type:O,ref:'Product'},qty:Number}]}));
+const Order=m.model('Order',new S({number:{type:String,unique:true},user:{type:O,index:true},key:String,items:[{_id:false,product:O,name:String,sku:String,price:Number,qty:Number}],address:{name:String,phone:String,line:String,city:String,state:String,pin:String,notes:String},email:String,subtotal:Number,delivery:Number,total:Number,payment:{type:String,default:'COD'},paymentStatus:{type:String,default:'Pending'},status:{type:String,default:'Pending',index:true}},{timestamps:true}));
+Order.schema.index({user:1,key:1},{unique:true,sparse:true});
+module.exports={User,Product,Cart,Order};
