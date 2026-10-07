@@ -1,15 +1,11 @@
 {
-  "main": "index.cjs",
-  "type": "module",
-  "engines": {
-    "node": "22.x"
-  }
-}
- "scripts": {
-  "start": "node index.cjs",
-  "dev": "node --watch index.cjs",
-  "seed": "node server/seed.cjs"
-}"
+  "name": "strumcart",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "seed": "node server/seed.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -23,6 +19,7 @@
   },
   "main": "index.js",
   "engines": {
-    "node": "24.x"
-  }
+    "node": "22.x"
+  },
+  "type": "commonjs"
 }
